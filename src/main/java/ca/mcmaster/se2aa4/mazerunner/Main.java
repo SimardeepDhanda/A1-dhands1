@@ -14,7 +14,7 @@ public class Main {
 
         logger.info("** Starting Maze Runner");
 
-        //set up the CLI options
+        // Set up the CLI options
         Options options = new Options();
         options.addOption(Option.builder("i")
                 .longOpt("input")
@@ -22,6 +22,12 @@ public class Main {
                 .hasArg()
                 .argName("FILE")
                 .required()
+                .build());
+        options.addOption(Option.builder("p")
+                .longOpt("path")
+                .desc("Path to navigate through the maze")
+                .hasArg()
+                .argName("PATH")
                 .build());
 
         CommandLineParser parser = new DefaultParser();
@@ -36,26 +42,28 @@ public class Main {
             return;
         }
 
-        //retrieve the input file path from the -i flag
+        // Retrieve the input file path from the -i flag
         String inputFilePath = cmd.getOptionValue("i");
 
         try {
             logger.info("**** Reading the maze from file " + inputFilePath);
-            BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        System.out.print("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        System.out.print("PASS ");
-                    }
+            char[][] maze = MazeLoader.loadMaze(inputFilePath);
+
+            // Log the maze (optional for debugging)
+            MazeLoader.printMaze(maze);
+
+            if (cmd.hasOption("p")) {
+                String path = cmd.getOptionValue("p");
+                logger.info("**** Validating path: " + path);
+                boolean isValid = PathValidator.isPathValid(maze, 0, 2, path); // Start from (1,1)
+                if (isValid) {
+                    logger.info("**** Path is valid!");
+                } else {
+                    logger.info("**** Path is invalid!");
                 }
-                System.out.print(System.lineSeparator());
             }
-            reader.close();
         } catch (Exception e) {
-            logger.error("/!\\\\ An error has occurred while reading the maze /!\\\\", e);
+            logger.error("/!\\\\ An error has occurred while processing the maze /!\\\\", e);
         }
 
         logger.info("**** Computing path");
