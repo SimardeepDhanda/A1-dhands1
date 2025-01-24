@@ -14,7 +14,7 @@ public class Main {
 
         logger.info("** Starting Maze Runner");
 
-        // Set up the CLI options
+        //sets up the CLI options (recheck)
         Options options = new Options();
         options.addOption(Option.builder("i")
                 .longOpt("input")
@@ -42,29 +42,9 @@ public class Main {
             return;
         }
 
-        // Retrieve the input file path from the -i flag
+        //get the input file path from the -i flag
         String inputFilePath = cmd.getOptionValue("i");
 
-        try {
-            logger.info("**** Reading the maze from file " + inputFilePath);
-            char[][] maze = MazeLoader.loadMaze(inputFilePath);
-
-            // Log the maze (optional for debugging)
-            MazeLoader.printMaze(maze);
-
-            if (cmd.hasOption("p")) {
-                String path = cmd.getOptionValue("p");
-                logger.info("**** Validating path: " + path);
-                boolean isValid = PathValidator.isPathValid(maze, 0, 2, path); // Start from (1,1)
-                if (isValid) {
-                    logger.info("**** Path is valid!");
-                } else {
-                    logger.info("**** Path is invalid!");
-                }
-            }
-        } catch (Exception e) {
-            logger.error("/!\\\\ An error has occurred while processing the maze /!\\\\", e);
-        }
 
         logger.info("**** Computing path");
         logger.info("PATH NOT COMPUTED");
