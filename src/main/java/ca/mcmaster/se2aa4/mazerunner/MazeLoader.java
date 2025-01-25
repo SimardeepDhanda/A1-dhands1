@@ -13,14 +13,14 @@ public class MazeLoader {
         String line;
         int maxWidth = 0;
 
-        // Read each line and determine the maximum width
+        //read each line and determine what maxixaum width is
         while ((line = reader.readLine()) != null) {
             lines.add(line);
             maxWidth = Math.max(maxWidth, line.length());
         }
         reader.close();
 
-        // Create the 2D maze array
+        //create the 2D maze array
         char[][] maze = new char[lines.size()][maxWidth];
         for (int i = 0; i < lines.size(); i++) {
             for (int j = 0; j < maxWidth; j++) {
@@ -30,4 +30,13 @@ public class MazeLoader {
         return maze;
     }
 
+    //printing for viewing
+    public static void printMaze(char[][] maze) {
+        for (char[] row : maze) {
+            for (char cell : row) {
+                System.out.print(cell);
+            }
+            System.out.println();
+        }
+    }
 }
