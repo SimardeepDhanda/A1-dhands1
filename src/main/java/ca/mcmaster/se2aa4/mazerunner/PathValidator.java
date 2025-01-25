@@ -12,7 +12,7 @@ public class PathValidator {
                 case 'L': x--; break; //move left
                 case 'R': x++; break; //move right
                 case 'B': y--; break; //Move down
-                default: return false; // Invalid move
+                default: return false; //Invalid move
             }
 
             //chec boundaries and wall collisions
