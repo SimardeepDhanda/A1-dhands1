@@ -49,13 +49,13 @@ public class Main {
             logger.info("**** Reading the maze from file " + inputFilePath);
             char[][] maze = MazeLoader.loadMaze(inputFilePath);
 
-            // Log the maze (optional for debugging)
+            //print the maze
             MazeLoader.printMaze(maze);
 
             if (cmd.hasOption("p")) {
                 String path = cmd.getOptionValue("p");
                 logger.info("**** Validating path: " + path);
-                boolean isValid = PathValidator.isPathValid(maze, 0, 2, path); // Start from (1,1)
+                boolean isValid = PathValidator.isPathValid(maze, 0, 2, path); // Start from 0,2 - hardcoded for now
                 if (isValid) {
                     logger.info("**** Path is valid!");
                 } else {
