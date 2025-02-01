@@ -2,42 +2,34 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public class PathValidator {
 
-    public static boolean isPathValid(char[][] maze, int startX, int startY, int endX, int endY, String path) {
-        int x = startX;
-        int y = startY;
-        int direction = 0; // 0 = rifht, 1 = down, 2 = left, 3 = up
+    public static boolean isPathValid(char[][] maze, int startRow, int startCol, int endRow, int endCol, String path) {
+        int row = startRow;
+        int col = startCol;
+        int direction = 0; // 0 = right, 1 = down, 2 = left, 3 = up
 
         for (char move : path.toCharArray()) {
             switch (move) {
                 case 'F':
-                    if (direction == 0) y++;
-                    else if (direction == 1) x++;
-                    else if (direction == 2) y--;
-                    else if (direction == 3) x--;
-                    break;
-                case 'B':
-                    if (direction == 0) y--;
-                    else if (direction == 1) x--;
-                    else if (direction == 2) y++;
-                    else if (direction == 3) x++;
+                    if (direction == 0) col++; 
+                    else if (direction == 1) row++; 
+                    else if (direction == 2) col--; 
+                    else if (direction == 3) row--; 
                     break;
                 case 'R':
-                    direction = (direction + 1) % 4; // Turn right
+                    direction = (direction + 1) % 4;
                     break;
                 case 'L':
-                    direction = (direction + 3) % 4; // Turn left 
+                    direction = (direction + 3) % 4;
                     break;
                 default:
-                    return false; // Invalid move
+                    return false; 
             }
 
-            // Check boundaries and wall collisions
-            if (x < 0 || y < 0 || x >= maze.length || y >= maze[0].length || maze[x][y] == '#') {
+            if (row < 0 || col < 0 || row >= maze.length || col >= maze[0].length || maze[row][col] == '#') {
                 return false;
             }
         }
 
-        // Check if the final position is the exit point
-        return x == endX && y == endY;
+        return row == endRow && col == endCol;
     }
 }

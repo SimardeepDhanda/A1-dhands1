@@ -1,7 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.cli.*;
@@ -14,7 +12,7 @@ public class Main {
 
         logger.info("** Starting Maze Runner");
 
-        // Set up the CLI options
+        // Set up CLI options
         Options options = new Options();
         options.addOption(Option.builder("i")
                 .longOpt("input")
@@ -42,19 +40,25 @@ public class Main {
             return;
         }
 
-        // Get the input file path from the -i flag
+        //get input file path
         String inputFilePath = cmd.getOptionValue("i");
 
         try {
             logger.info("**** Reading the maze from file " + inputFilePath);
             char[][] maze = MazeLoader.loadMaze(inputFilePath);
 
-            // Print the maze
+            //print the maze
             MazeLoader.printMaze(maze);
 
-            // Determine entry and exit points
+            // Find entry and exit points
             int[] entryPoint = MazeLoader.findEntryPoint(maze);
             int[] exitPoint = MazeLoader.findExitPoint(maze);
+
+            //handle case where no entry or exit is found
+            if (entryPoint == null || exitPoint == null) {
+                logger.error("**** Error: Could not determine valid entry or exit points.");
+                return;
+            }
 
             if (cmd.hasOption("p")) {
                 String path = cmd.getOptionValue("p");
@@ -65,13 +69,16 @@ public class Main {
                 } else {
                     logger.info("**** Path is invalid!");
                 }
+            } else {
+                //compute path using the RIght-Hand Rule
+                logger.info("**** Computing path using Right-Hand Rule");
+                String path = RightHandExplorer.computePath(maze, entryPoint[0], entryPoint[1], exitPoint[0], exitPoint[1]);
+                logger.info("**** Computed path: " + path);
             }
         } catch (Exception e) {
             logger.error("/!\\\\ An error has occurred while processing the maze /!\\\\", e);
         }
 
-        logger.info("**** Computing path");
-        logger.info("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
     }
 }
