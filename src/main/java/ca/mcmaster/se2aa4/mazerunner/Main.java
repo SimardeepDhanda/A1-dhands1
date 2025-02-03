@@ -62,18 +62,18 @@ public class Main {
 
             if (cmd.hasOption("p")) {
                 String path = cmd.getOptionValue("p");
-                logger.info("**** Validating path: " + path);
+                System.out.println("**** Validating path: " + path);
                 boolean isValid = PathValidator.isPathValid(maze, entryPoint[0], entryPoint[1], exitPoint[0], exitPoint[1], path);
                 if (isValid) {
-                    logger.info("**** Path is valid!");
+                    System.out.println("**** Path is valid!");
                 } else {
-                    logger.info("**** Path is invalid!");
+                    System.out.println("**** Path is invalid!");
                 }
             } else {
                 //compute path using the RIght-Hand Rule
-                logger.info("**** Computing path using Right-Hand Rule");
+                System.out.println("**** Computing path using Right-Hand Rule");
                 String path = RightHandExplorer.computePath(maze, entryPoint[0], entryPoint[1], exitPoint[0], exitPoint[1]);
-                logger.info("**** Computed path: " + path);
+                System.out.println("**** Computed path: " + path);
             }
         } catch (Exception e) {
             logger.error("/!\\\\ An error has occurred while processing the maze /!\\\\", e);

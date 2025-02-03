@@ -1,11 +1,9 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 public class RightHandExplorer {
     
-    private static final Logger logger = LogManager.getLogger();
 
 
     public static String computePath(char[][] maze, int startRow, int startCol, int endRow, int endCol) {
@@ -31,11 +29,11 @@ public class RightHandExplorer {
         }
 
         //compute factorized path
-        String factorizedPath = factorizePath(path.toString());
-
+        String factorizedPath = PathFactorizer.factorizePath(path.toString());
+        
         //print both paths
-        logger.info("Canonical Form: " + path);
-        logger.info("Factorized Form: " + factorizedPath);
+        System.out.println("Canonical Form: " + path);
+        System.out.println("Factorized Form: " + factorizedPath);
 
         return path.toString();
     }
@@ -53,37 +51,5 @@ public class RightHandExplorer {
         if (direction == 1) return new int[]{row + 1, col}; // down (↓)
         if (direction == 2) return new int[]{row, col - 1}; // left (←)
         return new int[]{row - 1, col}; // up (↑)
-    }
-
-    //factorized path
-    private static String factorizePath(String path) {
-        if (path.isEmpty()) return "";
-
-        StringBuilder factorized = new StringBuilder();
-        char prevChar = path.charAt(0);
-        int count = 1;
-
-        for (int i = 1; i < path.length(); i++) {
-            if (path.charAt(i) == prevChar) {
-                count++;
-            } else {
-                if (count > 1) {
-                    factorized.append(count).append(prevChar).append(" ");
-                } else {
-                    factorized.append(prevChar).append(" ");
-                }
-                prevChar = path.charAt(i);
-                count = 1;
-            }
-        }
-
-        // adds the last counted sequence
-        if (count > 1) {
-            factorized.append(count).append(prevChar);
-        } else {
-            factorized.append(prevChar);
-        }
-
-        return factorized.toString();
     }
 }
