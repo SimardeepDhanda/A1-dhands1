@@ -1,8 +1,14 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.commons.cli.*;
 
 public class Main {
 
@@ -73,7 +79,7 @@ public class Main {
                 //compute path using the RIght-Hand Rule
                 System.out.println("**** Computing path using Right-Hand Rule");
                 String path = RightHandExplorer.computePath(maze, entryPoint[0], entryPoint[1], exitPoint[0], exitPoint[1]);
-                System.out.println("**** Computed path: " + path);
+                System.out.println("**** Canonical Form:: " + path);
             }
         } catch (Exception e) {
             logger.error("/!\\\\ An error has occurred while processing the maze /!\\\\", e);

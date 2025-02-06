@@ -5,7 +5,7 @@ public class PathValidator {
     public static boolean isPathValid(char[][] maze, int startRow, int startCol, int endRow, int endCol, String path) {
         int row = startRow;
         int col = startCol;
-        int direction = 0; // 0 = right, 1 = down, 2 = left, 3 = up
+        int direction = 0;
 
         for (char move : path.toCharArray()) {
             switch (move) {

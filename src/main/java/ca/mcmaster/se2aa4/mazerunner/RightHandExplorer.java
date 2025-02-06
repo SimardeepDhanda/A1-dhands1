@@ -32,7 +32,6 @@ public class RightHandExplorer {
         String factorizedPath = PathFactorizer.factorizePath(path.toString());
         
         //print both paths
-        System.out.println("Canonical Form: " + path);
         System.out.println("Factorized Form: " + factorizedPath);
 
         return path.toString();
