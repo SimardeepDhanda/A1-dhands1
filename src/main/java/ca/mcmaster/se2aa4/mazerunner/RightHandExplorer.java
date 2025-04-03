@@ -1,40 +1,31 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 
-
 public class RightHandExplorer {
     
 
-
+    
     public static String computePath(char[][] maze, int startRow, int startCol, int endRow, int endCol) {
-        StringBuilder path = new StringBuilder();
-        int row = startRow, col = startCol, direction = 0;
+    StringBuilder path = new StringBuilder();
+    Position position = new Position(startRow, startCol, 0);
 
-        while (row != endRow || col != endCol) {
-            int rightDir = (direction + 1) % 4;
-            if (canMove(maze, row, col, rightDir)) {
-                direction = rightDir;
-                path.append('R');
-            }
-
-            if (canMove(maze, row, col, direction)) {
-                int[] newPos = moveForward(row, col, direction);
-                row = newPos[0];
-                col = newPos[1];
-                path.append('F');
-            } else {
-                direction = (direction + 3) % 4;
-                path.append('L');
-            }
+    while (position.row != endRow || position.col != endCol) {
+        int rightDir = (position.direction + 1) % 4;
+        if (canMove(maze, position.row, position.col, rightDir)) {
+            new TurnRightCommand().execute(path, position);
         }
 
-        //compute factorized path
-        String factorizedPath = PathFactorizer.factorizePath(path.toString());
-        
-        //print both paths
-        System.out.println("Factorized Form: " + factorizedPath);
+        if (canMove(maze, position.row, position.col, position.direction)) {
+            new MoveForwardCommand(maze).execute(path, position);
+        } else {
+            new TurnLeftCommand().execute(path, position);
+        }
+    }
 
-        return path.toString();
+    String factorizedPath = PathFactorizer.factorizePath(path.toString());
+    System.out.println("Factorized path: " + factorizedPath);
+    return path.toString();  // This will pass tests expecting [FLR]+
+
     }
 
     private static boolean canMove(char[][] maze, int row, int col, int direction) {
@@ -45,7 +36,7 @@ public class RightHandExplorer {
                && newCol < maze[0].length && maze[newRow][newCol] == ' ';
     }
 
-    private static int[] moveForward(int row, int col, int direction) {
+    public static int[] moveForward(int row, int col, int direction) {
         if (direction == 0) return new int[]{row, col + 1}; // right (→)
         if (direction == 1) return new int[]{row + 1, col}; // down (↓)
         if (direction == 2) return new int[]{row, col - 1}; // left (←)
