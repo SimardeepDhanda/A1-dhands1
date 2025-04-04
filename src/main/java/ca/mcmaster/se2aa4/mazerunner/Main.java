@@ -53,8 +53,7 @@ public class Main {
             logger.info("**** Reading the maze from file " + inputFilePath);
             char[][] maze = MazeLoader.loadMaze(inputFilePath);
 
-            //print the maze
-            MazeLoader.printMaze(maze);
+
 
             // Find entry and exit points
             int[] entryPoint = MazeLoader.findEntryPoint(maze);
