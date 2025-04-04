@@ -18,3 +18,20 @@ class ExplorerInstructionFormatTest {
         assertTrue(path.matches("[FLR]+"));
     }
 }
+
+class ExplorerOutputTest {
+
+    @Test
+    void testRightHandExplorer_nonNullOutput() {
+        char[][] maze = {
+            {'#', '#', '#', '#', '#'},
+            {' ', ' ', ' ', ' ', '#'},
+            {'#', '#', '#', ' ', '#'},
+            {'#', ' ', ' ', ' ', ' '},
+            {'#', '#', '#', '#', '#'}
+        };
+        String path = RightHandExplorer.computePath(maze, 1, 0, 3, 4);
+        assertNotNull(path);
+        assertFalse(path.isEmpty());
+    }
+}
